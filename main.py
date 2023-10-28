@@ -43,17 +43,17 @@ class Racket(pygame.sprite.Sprite):
 
     def update_l(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
+        if keys[pygame.K_w] and self.rect.y > 0 :
             self.rect.y -= self.speed
-        if keys[pygame.K_s]:
+        if keys[pygame.K_s]and self.rect.y < HEIGHT-200:
             self.rect.y += self.speed
 
 
     def update_r(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP]and self.rect.y > 0 :
             self.rect.y -= self.speed
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_DOWN] and self.rect.y < HEIGHT-200:
             self.rect.y += self.speed        
 
 
@@ -66,10 +66,13 @@ ball = Ball("tennis-ball.png", (WIDHT/2, HEIGHT/2), (50,50))
 
 speed_x, speed_y = 5,5
 
+
+
 pygame.font.init()
 font1 = pygame.font.Font(None, 60)
 
-
+score_l = 0
+score_r = 0
 
 
 game = True 
@@ -104,10 +107,25 @@ while game:
             text = font1.render("Переміг Лівий Гравець",True,(0,0,100))
             window.blit(text, (WIDHT/2, HEIGHT/2))
 
+
         if ball.rect.x <= -50:
+            score_r += 1
+            ball.rect.center = WIDTH/2, HEIGHT/2
+        if score_r >= 5:
             finish = True
             text = font1.render("Переміг Правий Гравець",True,(0,0,100))
-            window.blit(text, (WIDHT/2, HEIGHT/2))
+            window.blit(text, (WIDTH/2, HEIGHT/2))
+
+
+
+        if ball.rect.x >= WIDTH+50:
+            score_l +=1 
+            ball.rect.center = WIDTH/2, HEIGHT/2
+        if  score_l >= 5:
+            finish = True
+            text = font1.render("Переміг Лівий Гравець",True,(0
+0,100))
+            window.blit(text, (WIDTH/2, HEIGHT/2))
 
 
     pygame.display.update()
